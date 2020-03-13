@@ -1,6 +1,8 @@
 package main
 
 import (
+	"./lexer"
+	"./tokenizer"
 	"log"
 )
 
@@ -8,13 +10,13 @@ func main() {
 
 	var file string
 	file = "tost.cmm"
-	tokens, err := Tokenize(file)
+	tokens, err := tokenizer.Tokenize(file)
 
 	if err != nil {
 		log.Fatalf("Could not tokenize file: %s", err)
 	}
 
-	lex, err := Lex(tokens)
+	lex, err := lexer.Lex(tokens)
 
 	if err != nil {
 		log.Fatalf("Could not lex the tokens: %s", err)
