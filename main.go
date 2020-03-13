@@ -3,6 +3,7 @@ package main
 import (
 	"./lexer"
 	"./tokenizer"
+	"fmt"
 	"log"
 )
 
@@ -16,11 +17,9 @@ func main() {
 		log.Fatalf("Could not tokenize file: %s", err)
 	}
 
-	lex, err := lexer.Lex(tokens)
+	lexedTokens := lexer.Lex(tokens)
 
-	if err != nil {
-		log.Fatalf("Could not lex the tokens: %s", err)
-	}
+	fmt.Println(lexedTokens)
 
 	//parse, err := parser.Parser.Parse(lex)
 	//
