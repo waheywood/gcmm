@@ -16,7 +16,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not tokenize file: %s", err)
 	}
-
+	fmt.Println(tokens)
 	lexedTokens := lexer.Lex(tokens)
 
 	fmt.Println(lexedTokens)

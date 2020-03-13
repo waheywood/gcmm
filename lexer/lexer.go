@@ -6,14 +6,18 @@ import (
 )
 
 var operators map[string]bool
+var reservedWords map[string]bool
 
 type LexedTokens struct {
 	tokenType  string
-	tokenValue interface{}
+	tokenValue string
 }
 
 func init() {
+	//Initialise the maps
 	operators = make(map[string]bool)
+	reservedWords = make(map[string]bool)
+	//Populate operator map with all operators
 	operators["="] = true
 	operators["-"] = true
 	operators["/"] = true
@@ -28,33 +32,71 @@ func init() {
 	operators[")"] = true
 	operators[">"] = true
 	operators["<"] = true
+	operators["!"] = true
+
+	//Populate reservedWords map
+	reservedWords["if"] = true
+	reservedWords["else"] = true
+	reservedWords["print"] = true
+	reservedWords["while"] = true
+
 }
 
 func Lex(tokens []string) (lexedTokens []LexedTokens) {
 
-	for _, v := range tokens {
-		if isOperator(v) {
+	for i := 0; i < len(tokens); i++ {
+		curToken := tokens[i]
+		if isOperator(curToken) {
 			t := LexedTokens{
 				tokenType:  "OPERATOR",
-				tokenValue: v,
+				tokenValue: curToken,
+			}
+			var nextToken string
+			if i < len(tokens)-1 {
+				nextToken = tokens[i+1]
+			} else {
+				lexedTokens = append(lexedTokens, t)
+				continue
+			}
+
+			if isOperator(nextToken) {
+				if curToken == "!" && nextToken == "=" {
+					t.tokenValue = t.tokenValue + nextToken
+				} else if curToken == "=" && nextToken == "=" {
+					t.tokenValue = t.tokenValue + nextToken
+				} else if curToken == "|" && nextToken == "|" {
+					t.tokenValue = t.tokenValue + nextToken
+				} else if curToken == ">" && nextToken == "=" {
+					t.tokenValue = t.tokenValue + nextToken
+				} else if curToken == "<" && nextToken == "=" {
+					t.tokenValue = t.tokenValue + nextToken
+				} else if curToken == "&" && nextToken == "&" {
+					t.tokenValue = t.tokenValue + nextToken
+				}
+				lexedTokens = append(lexedTokens, t)
+				i++
+				continue
 			}
 			lexedTokens = append(lexedTokens, t)
-		} else if isNumber(v) {
+		} else if isNumber(curToken) {
 			t := LexedTokens{
 				tokenType:  "INTEGER",
-				tokenValue: v,
+				tokenValue: curToken,
 			}
 			lexedTokens = append(lexedTokens, t)
-		} else if isFloat(v) {
+		} else if isFloat(curToken) {
 			t := LexedTokens{
 				tokenType:  "FLOAT",
-				tokenValue: v,
+				tokenValue: curToken,
 			}
 			lexedTokens = append(lexedTokens, t)
-		} else if isIdentifier(v) {
+		} else if isIdentifier(curToken) {
 			t := LexedTokens{
 				tokenType:  "IDENTIFIER",
-				tokenValue: v,
+				tokenValue: curToken,
+			}
+			if isReservedWord(curToken) {
+				t.tokenType = "RESERVED"
 			}
 			lexedTokens = append(lexedTokens, t)
 		}
@@ -86,6 +128,13 @@ func isFloat(token string) bool {
 
 func isIdentifier(token string) bool {
 	if reflect.TypeOf(token).Kind() == reflect.String {
+		return true
+	}
+	return false
+}
+
+func isReservedWord(token string) bool {
+	if reservedWords[token] {
 		return true
 	}
 	return false
