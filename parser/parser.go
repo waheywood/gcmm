@@ -1,11 +1,11 @@
 package parser
 
 import (
-	"fmt"
-	"strconv"
-
 	l "../lexer"
 )
+
+type ParseNode struct {
+}
 
 type Parser struct {
 	tokens []l.LexedTokens
@@ -17,8 +17,35 @@ func NewParser(tokensToBeParsed []l.LexedTokens) Parser {
 	return p
 }
 
-func (p Parser) StartParse() {
+func (p Parser) StartParse() string {
 	for i, v := range p.tokens {
-		fmt.Println(strconv.Itoa(i) + " " + v.TokenType + " " + v.TokenValue)
+		switch v.TokenType {
+		case "RESERVED":
+			p.reservedToken(p.tokens[i+1:])
+		case "OPERATOR":
+			p.operatorToken(p.tokens[i+1:])
+		case "INTEGER":
+			p.integerToken(p.tokens[i+1:])
+		case "IDENTIFIER":
+			p.identifierToken(p.tokens[i+1:])
+		default:
+			return "Not a valid token"
+		}
 	}
+}
+
+func (p Parser) reservedToken(t []l.LexedTokens) {
+
+}
+
+func (p Parser) operatorToken(t []l.LexedTokens) {
+
+}
+
+func (p Parser) integerToken(t []l.LexedTokens) {
+
+}
+
+func (p Parser) identifierToken(t []l.LexedTokens) {
+
 }
