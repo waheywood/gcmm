@@ -9,8 +9,8 @@ var operators map[string]bool
 var reservedWords map[string]bool
 
 type LexedTokens struct {
-	tokenType  string
-	tokenValue string
+	TokenType  string
+	TokenValue string
 }
 
 func init() {
@@ -48,8 +48,8 @@ func Lex(tokens []string) (lexedTokens []LexedTokens) {
 		curToken := tokens[i]
 		if isOperator(curToken) {
 			t := LexedTokens{
-				tokenType:  "OPERATOR",
-				tokenValue: curToken,
+				TokenType:  "OPERATOR",
+				TokenValue: curToken,
 			}
 			var nextToken string
 			if i < len(tokens)-1 {
@@ -61,17 +61,17 @@ func Lex(tokens []string) (lexedTokens []LexedTokens) {
 
 			if isOperator(nextToken) {
 				if curToken == "!" && nextToken == "=" {
-					t.tokenValue = t.tokenValue + nextToken
+					t.TokenValue = t.TokenValue + nextToken
 				} else if curToken == "=" && nextToken == "=" {
-					t.tokenValue = t.tokenValue + nextToken
+					t.TokenValue = t.TokenValue + nextToken
 				} else if curToken == "|" && nextToken == "|" {
-					t.tokenValue = t.tokenValue + nextToken
+					t.TokenValue = t.TokenValue + nextToken
 				} else if curToken == ">" && nextToken == "=" {
-					t.tokenValue = t.tokenValue + nextToken
+					t.TokenValue = t.TokenValue + nextToken
 				} else if curToken == "<" && nextToken == "=" {
-					t.tokenValue = t.tokenValue + nextToken
+					t.TokenValue = t.TokenValue + nextToken
 				} else if curToken == "&" && nextToken == "&" {
-					t.tokenValue = t.tokenValue + nextToken
+					t.TokenValue = t.TokenValue + nextToken
 				}
 				lexedTokens = append(lexedTokens, t)
 				i++
@@ -80,23 +80,23 @@ func Lex(tokens []string) (lexedTokens []LexedTokens) {
 			lexedTokens = append(lexedTokens, t)
 		} else if isNumber(curToken) {
 			t := LexedTokens{
-				tokenType:  "INTEGER",
-				tokenValue: curToken,
+				TokenType:  "INTEGER",
+				TokenValue: curToken,
 			}
 			lexedTokens = append(lexedTokens, t)
 		} else if isFloat(curToken) {
 			t := LexedTokens{
-				tokenType:  "FLOAT",
-				tokenValue: curToken,
+				TokenType:  "FLOAT",
+				TokenValue: curToken,
 			}
 			lexedTokens = append(lexedTokens, t)
 		} else if isIdentifier(curToken) {
 			t := LexedTokens{
-				tokenType:  "IDENTIFIER",
-				tokenValue: curToken,
+				TokenType:  "IDENTIFIER",
+				TokenValue: curToken,
 			}
 			if isReservedWord(curToken) {
-				t.tokenType = "RESERVED"
+				t.TokenType = "RESERVED"
 			}
 			lexedTokens = append(lexedTokens, t)
 		}

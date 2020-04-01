@@ -1,10 +1,12 @@
 package main
 
 import (
-	"./lexer"
-	"./tokenizer"
 	"fmt"
 	"log"
+
+	"./lexer"
+	"./parser"
+	"./tokenizer"
 )
 
 func main() {
@@ -21,8 +23,9 @@ func main() {
 
 	fmt.Println(lexedTokens)
 
-	//parse, err := parser.Parser.Parse(lex)
-	//
+	p := parser.NewParser(lexedTokens)
+	p.StartParse()
+
 	//if err != nil {
 	//	log.Fatalf("Could not parse the lexed tokens: %s", err)
 	//}
