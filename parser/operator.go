@@ -9,9 +9,9 @@ func AndToken(p Parser, i *int) {
 
 func OrToken(p Parser, i *int) {
 	if p.Tokens[*i-1].TokenValue || p.Tokens[*i+1].TokenValue {
-		p.Tree.Children = append(p.Tree.Children, BlockNode{Type: "And", Value: true})
+		p.Tree.Children = append(p.Tree.Children, BlockNode{Type: "Or", Value: true})
 	}
-	p.Tree.Children = append(p.Tree.Children, BlockNode{Type: "And", Value: false})
+	p.Tree.Children = append(p.Tree.Children, BlockNode{Type: "Or", Value: false})
 
 }
 
