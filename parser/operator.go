@@ -1,77 +1,77 @@
 package parser
 
-func AndToken() {
+func AndToken(p Parser, i int) {
 
 }
 
-func OrToken() {
+func OrToken(p Parser, i int) {
 
 }
 
-func Assign() {
+func Assign(p Parser, i int) {
 
 }
 
-func Comma() {
+func Comma(p Parser, i int) {
 
 }
 
-func Div() {
+func Div(p Parser, i int) {
 
 }
 
-func Mod() {
+func Mod(p Parser, i int) {
 
 }
 
-func NotEqToken() {
+func NotEqToken(p Parser, i int) {
 
 }
 
-func EqToken() {
+func EqToken(p Parser, i int) {
 
 }
 
-func Gte() {
+func Gte(p Parser, i int) {
 
 }
 
-func Lte() {
+func Lte(p Parser, i int) {
 
 }
 
-func Lt() {
+func Lt(p Parser, i int) {
 
 }
 
-func Gt() {
+func Gt(p Parser, i int) {
 
 }
 
-func Lb() {
+func Lb(p Parser, i int) {
 
 }
 
-func Rb() {
+func Rb(p Parser, i int) {
 
 }
 
-func Add() {
+func Add(p Parser, i int) {
 
 }
 
-func Mul() {
+func Mul(p Parser, i int) {
 
 }
 
-func Exp() {
+func Exp(p Parser, i int) {
 
 }
 
-func Lcb() {
+func Lcb(p Parser, i int) {
 
 }
 
-func Rcb() {
+func Rcb(p Parser, i int) {
 
 }

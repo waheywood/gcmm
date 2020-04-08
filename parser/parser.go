@@ -4,13 +4,16 @@ import (
 	l "../lexer"
 )
 
-type ParseNode struct {
-	children []ParseNode
+type BlockNode struct {
+	Children []ParseNode
+	Type     string
 }
+
+type ParseNode interface{}
 
 type Parser struct {
 	Tokens []l.LexedTokens
-	Tree   ParseNode
+	Tree   BlockNode
 }
 
 func NewParser(tokensToBeParsed []l.LexedTokens) Parser {
@@ -20,7 +23,7 @@ func NewParser(tokensToBeParsed []l.LexedTokens) Parser {
 }
 
 func (p Parser) StartParse() string {
-	p.Tree = ParseNode{}
+
 	for i, v := range p.Tokens {
 		switch v.TokenType {
 		case "RESERVED":
@@ -41,13 +44,13 @@ func (p Parser) StartParse() string {
 func (p Parser) reservedToken(i int) {
 	switch p.Tokens[i].TokenValue {
 	case "if":
-		IfToken()
+		node, i, err := IfToken(p, i)
 	case "else":
-		ElseToken()
+		ElseToken(p, i)
 	case "while":
-		WhileToken()
+		WhileToken(p, i)
 	case "print":
-		PrintToken()
+		PrintToken(p, i)
 	}
 }
 
