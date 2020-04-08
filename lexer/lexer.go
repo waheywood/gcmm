@@ -84,12 +84,6 @@ func Lex(tokens []string) (lexedTokens []LexedTokens) {
 				TokenValue: curToken,
 			}
 			lexedTokens = append(lexedTokens, t)
-		} else if isFloat(curToken) {
-			t := LexedTokens{
-				TokenType:  "FLOAT",
-				TokenValue: curToken,
-			}
-			lexedTokens = append(lexedTokens, t)
 		} else if isIdentifier(curToken) {
 			t := LexedTokens{
 				TokenType:  "IDENTIFIER",
