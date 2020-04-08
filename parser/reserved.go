@@ -1,15 +1,10 @@
 package parser
 
 import (
-	"fmt"
-
 	l "../lexer"
 )
 
-func IfToken(p Parser, i *int) (BlockNode, string) {
-	if p.Tokens[*i+1].TokenValue != "(" {
-		return BlockNode{}, fmt.Sprintf("Invalid token, missing ( after if at %d", i)
-	}
+func IfToken(p Parser, i *int) {
 	var node BlockNode
 	node.Type = "if"
 	var values []l.LexedTokens
@@ -30,22 +25,20 @@ func IfToken(p Parser, i *int) (BlockNode, string) {
 
 	}
 	np := NewParser(values)
-	err := np.StartParse()
-	if err != "" {
-		return BlockNode{}, "Error in parsing"
-	}
-	return np.Tree, ""
-}
-
-func ElseToken(p Parser, i *int) (BlockNode, string) {
-	return IfToken(p, i)
-}
-
-func WhileToken(p Parser, i *int) (BlockNode, string) {
+	_ = np.StartParse()
+	p.Tree.Children = append(p.Tree.Children, np.Tree)
 
 }
 
-func PrintToken(p Parser, i *int) (BlockNode, string) {
+func ElseToken(p Parser, i *int) {
+	IfToken(p, i)
+}
+
+func WhileToken(p Parser, i *int) {
+
+}
+
+func PrintToken(p Parser, i *int) {
 	var print BlockNode
 	var tokens []string
 	for _, v := range p.Tokens[*i+1:] {
@@ -57,5 +50,5 @@ func PrintToken(p Parser, i *int) (BlockNode, string) {
 	}
 	print.Type = "print"
 	print.Value = tokens
-	return print, ""
+	p.Tree.Children = append(p.Tree.Children, print)
 }
